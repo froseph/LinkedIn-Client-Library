@@ -62,6 +62,38 @@ class LinkedInAPI(object):
         resp, content = client.request(access_token_url, 'POST')
         access_token = dict(urlparse.parse_qsl(content))
         return access_token
+        
+    def exchange_bearer_token(self, bearer_token={}):
+        """
+        Exchange a Javascript OAuth2 bearer token for a longer-lived
+        OAuth1.0a access token. Full method is described in detail at:
+        
+        http://developer.linkedin.com/docs/DOC-1252
+        
+        From the doc:
+        
+        The cookie is named linkedin_oauth_API_KEY, where API_KEY is your 
+        application's LinkedIn API key. (This is also known as a "consumer_key" in OAuth.)
+     
+        Its value is a JSON object, which looks like this:
+        
+            {
+                 "signature_method" :"HMAC-SHA1",
+                 "signature_order"  : ["access_token", "member_id"],
+                 "access_token"     :"AD2dpVe1tOclAsNYsCri4nOatfstw7ZnMzWP",
+                 "signature"        :"73f948524c6d1c07b5c554f6fc62d824eac68fee",
+                 "member_id"        :"vvUNSej47H"
+                 "signature_version": 1
+            }
+        
+        """
+        assert 'access_token' in bearer_token, 'bearer_token must contain access_token'
+        client = oauth.Client(self.consumer, token=None)
+        access_token_url = self.base_url + self.access_token_path
+        
+        resp, content = client.request(access_token_url, 'POST', urllib.urlencode({ 'xoauth_oauth2_access_token' : bearer_token['access_token'] }))
+        access_token = dict(urlparse.parse_qsl(content))
+        return access_token
     
     def get_user_profile(self, access_token, selectors=None, **kwargs):
         """
