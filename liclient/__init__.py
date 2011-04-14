@@ -65,6 +65,9 @@ class LinkedInAPI(object):
         
     def exchange_bearer_token(self, bearer_token={}):
         """
+        bearer_token - A dict representing the JSON object contained
+        in the secure cookie 'linkedin_oauth_API_KEY'.
+        
         Exchange a Javascript OAuth2 bearer token for a longer-lived
         OAuth1.0a access token. Full method is described in detail at:
         
