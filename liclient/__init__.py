@@ -27,6 +27,7 @@ class LinkedInAPI(object):
         self.request_token_path = '/uas/oauth/requestToken'
         self.access_token_path = '/uas/oauth/accessToken'
         self.authorize_path = '/uas/oauth/authorize'
+        self.authenticate_path = '/uas/oauth/authenticate'
         
         self.consumer = oauth.Consumer(self.consumer_key, self.consumer_secret)
         
