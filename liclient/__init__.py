@@ -227,8 +227,7 @@ class LinkedInAPI(object):
         mxml = self.message_factory(recipients, subject, body)
         user_token, url = self.prepare_request(access_token, self.api_mailbox_url)
         client = oauth.Client(self.consumer, user_token)
-        resp, content = client.request(url, method='POST', body=mxml, headers={'Content-Type': 'application/xml'})
-        return content
+        return client.request(url, method='POST', body=mxml, headers={'Content-Type': 'application/xml'})
     
     def send_invitation(self, access_token, recipients, subject, body, **kwargs):
         """
